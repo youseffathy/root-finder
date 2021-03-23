@@ -1,0 +1,32 @@
+    def get_g_equation(self):
+        g_equation = self.parseFuncion(self.function)
+
+        print(g_equation)
+        g_equation = " " + g_equation + " "
+        pattern = "(([-+])?\s*(\d*\.*\d*)?\*?[x])[\s][+-]?"             # "(([-+]\s*\d*)?[*]?[x])"     "(([-+]\s*\d*)?[*]?[x]$)"
+        result = re.findall(pattern, g_equation)
+        i = 0
+        print(result)
+        while i < len(result) and len(result) > 1:
+            if result[i][2] == "" and result[i][1] == "":
+                # print(result[i])
+                del result[i]
+                i -= 1
+            i+=1
+        print(result)                                                       #"(([-+])*\s*(\d*\.*\d*)?[*]?[x])[\s][+-]"
+        sign = result[0][1]
+        if sign == "":
+            sign = '+'
+        g_equation = g_equation.replace(" "+result[0][0], '')
+        g_equation = self.parseFuncion(g_equation)
+        print(g_equation, "jhahahahaha")
+        if result[0][2] == "":
+            denomerator = "1"
+        else:
+            denomerator = result[0][2]
+        if sign == "+":
+            g_equation = "(" + g_equation + ")/-" + denomerator
+        else:
+            g_equation = "(" + g_equation + ")/" + denomerator
+        print(denomerator)
+        return g_equation
